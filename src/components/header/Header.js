@@ -6,7 +6,7 @@ export default () => (
   <header>
     <div className="header-content">
       <Link to="/">
-        <h1>Dave's Dev thoughts</h1>
+        <h1>David&apos;s Dev thoughts</h1>
       </Link>
       <ul>
         <Link to="/about-me">
