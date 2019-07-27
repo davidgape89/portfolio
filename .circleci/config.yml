@@ -18,6 +18,9 @@ jobs:
     docker:
       - image: circleci/node:8
     steps:
+      - checkout
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
       - run: 
           name: Checking code syntax
           command: yarn run lint
@@ -28,6 +31,9 @@ jobs:
     docker: 
       - image: circleci/node:8
     steps:
+      - checkout
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
       - run:
           name: build
           command: yarn run build
