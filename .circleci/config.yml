@@ -38,6 +38,6 @@ workflows:
           requires:
             - get-dependencies
       - build:
-          requrires:
+          requires:
             - test
     
