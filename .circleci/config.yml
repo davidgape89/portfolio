@@ -49,12 +49,12 @@ jobs:
       - checkout
       - run:
           name: Installing firebase tools
-          command: yarn global add firebase-tools
+          command: yarn add firebase-tools
       - restore_cache:
           key: build-files-{{ .BuildNum }}
       - deploy:
           name: Deploying to Firebase
-          command: firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
+          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
 workflows:
   version: 2
   build:
