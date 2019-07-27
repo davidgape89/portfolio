@@ -49,7 +49,7 @@ jobs:
       - checkout
       - run:
           name: Installing firebase tools
-          command: yarn add -g firebase-tools
+          command: yarn global add firebase-tools
       - restore_cache:
           key: build-files-{{ .BuildNum }}
       - deploy:
