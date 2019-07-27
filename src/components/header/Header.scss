@@ -1,0 +1,15 @@
+@import '../../styles/variables';
+
+header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.header-content {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: $m-size;
+  width: $content-width;
+}

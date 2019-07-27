@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+.home-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.home-page__content {
+  width: $content-width;
+}
