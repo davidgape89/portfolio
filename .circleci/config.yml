@@ -9,9 +9,11 @@ jobs:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
       - run: 
           name: Installing dependencies
-          run: yarn install
+          command: yarn install
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
   test:
     docker:
       - image: circleci/node:8
