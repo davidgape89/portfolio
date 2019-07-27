@@ -39,7 +39,7 @@ jobs:
           name: build
           command: yarn run build
       - save_cache:
-          key: build-files-{{ .BuildNum }}
+          key: build-files-{{ .Branch }}
           paths:
             - build
   deploy:
@@ -51,7 +51,7 @@ jobs:
           name: Installing firebase tools
           command: yarn add firebase-tools
       - restore_cache:
-          key: build-files-{{ .BuildNum }}
+          key: build-files-{{ .Branch }}
       - deploy:
           name: Deploying to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
