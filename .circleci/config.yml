@@ -20,10 +20,10 @@ jobs:
     steps:
       - run: 
           name: Checking code syntax
-          run: yarn run lint
+          command: yarn run lint
       - run:
           name: Running unit tests
-          run: yarn run test
+          command: yarn run test
   build:
     docker: 
       - image: circleci/node:8
