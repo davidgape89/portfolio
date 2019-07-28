@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {connectAuth} from '../../contexts/auth/AuthContext';
 import './Header.scss';
 
-export default () => (
+export const Header = () => (
   <header>
     <div className="header-content">
       <Link to="/">
@@ -16,3 +17,5 @@ export default () => (
     </div>
   </header>
 );
+
+export default connectAuth(Header);
