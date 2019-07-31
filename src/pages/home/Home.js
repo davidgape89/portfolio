@@ -1,13 +1,19 @@
 import React from 'react';
 import Article from '../../components/article/Article';
 import article from '../../assets/mocks/article';
+import {withAuth} from '../../contexts/auth/AuthContext';
 
 import './Home.scss';
 
-export default () => (
-  <div className="home-page">
-    <div className="home-page__content">
-      <Article {...article} />
+const Home = (props) => {
+  console.log(props);
+  return (
+    <div className="home-page">
+      <div className="home-page__content">
+        <Article {...article} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
+
+export default withAuth(Home);

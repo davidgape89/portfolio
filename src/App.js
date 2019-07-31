@@ -9,18 +9,20 @@ import './App.scss';
 
 // TODO - Include credit to the author of the favicon
 // <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"                 title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"                 title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-const App = () => (
-  <div className="App">
-    <AuthContextProvider>
-      <div className="content">
-        <Router>
-          <Header />
-          <Route path="/" exact component={Home} />
-          <Route path="/about-me" component={Portfolio} />
-        </Router>
-      </div>
-    </AuthContextProvider>
-  </div>
-);
+const App = () => {
+  return (
+    <div className="App">
+      <AuthContextProvider>
+        <div className="content">
+          <Router>
+            <Header />
+            <Route path="/" exact component={Home} />
+            <Route path="/about-me" component={Portfolio} />
+          </Router>
+        </div>
+      </AuthContextProvider>
+    </div>
+  );
+};
 
 export default App;
