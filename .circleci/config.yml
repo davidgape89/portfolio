@@ -39,9 +39,9 @@ jobs:
           name: build
           command: yarn run build
       - persist_to_workspace:
-          root: .
+          root: build
           paths:
-            - build
+            - .
   deploy:
     docker:
       - image: circleci/node:8
@@ -49,6 +49,8 @@ jobs:
       - checkout
       - restore_cache:
           key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+      - attach_workspace:
+          at: build
       - deploy:
           name: Deploying to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
