@@ -4,7 +4,7 @@ module.exports = {
         "es6": true,
         "jest": true
     },
-    "extends": "airbnb",
+    "extends": ["google", "plugin:react/recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -21,5 +21,11 @@ module.exports = {
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/display-name": [0, { "ignoreTranspilerName": false }]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 };

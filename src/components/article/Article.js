@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './Article.scss';
 
 const Article = (props) => {
-  const { title, content } = props;
+  const {title, content} = props;
 
   return (
     <article>
