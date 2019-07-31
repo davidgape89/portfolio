@@ -38,8 +38,7 @@ jobs:
       - run:
           name: build
           command: yarn run build
-      - save_cache:
-          key: build-files-{{ .Branch }}
+      - persist_to_workspace:
           paths:
             - build
   deploy:
@@ -47,11 +46,6 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - run:
-          name: Installing firebase tools
-          command: yarn add firebase-tools
-      - restore_cache:
-          key: build-files-{{ .Branch }}
       - deploy:
           name: Deploying to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive

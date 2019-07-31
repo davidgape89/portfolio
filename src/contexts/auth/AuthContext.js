@@ -12,6 +12,7 @@ const AuthContextProvider = ({children}) => {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((response) => {
       if (response) {
+        console.info('INFO :: Authentication is working!');
         const {uid, displayName, photoUrl, email} = response;
         dispatch(setUser({
           uid,
