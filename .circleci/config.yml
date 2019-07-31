@@ -47,6 +47,8 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
+      - restore_cache:
+          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
       - deploy:
           name: Deploying to Firebase
           command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
