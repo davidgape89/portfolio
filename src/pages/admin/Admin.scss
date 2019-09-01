@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+
+.admin-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.admin-page__content {
+  display: flex;
+  flex-direction: column;
+  padding-top: $s-size;
+  width: $content-width;
+}
+
+.admin-page__action-buttons {
+  display:flex;
+  justify-content: flex-end;
+  padding: $s-size;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin: $m-size 0;
+
+  span {
+    margin-bottom: $s-size;
+  }
+}

@@ -1,6 +1,9 @@
 export const initialState = {
-  uid: '',
+  email: null,
+  displayName: null,
+  photoUrl: null,
   roles: [],
+  uid: null,
 };
 
 export default (state, action) => {
