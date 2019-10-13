@@ -1,18 +1,21 @@
-import React, {useReducer, createContext, useEffect} from 'react';
+import React, {useReducer, createContext, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {firebase} from '../../firebase/firebase';
 import reducer, {initialState} from './authReducer';
-import {setUser} from './authActions';
+import {setUser, logOut} from './authActions';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const AuthContextProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const logout = () => firebase.auth().signOut()
+      .then(() => dispatch(logOut()))
+      .catch(() => console.warn('There was a problem logging out'));
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged((response) => {
       if (response) {
-        console.info('INFO :: Authentication is working!');
         const {uid, displayName, photoUrl, email} = response;
         dispatch(setUser({
           uid,
@@ -27,6 +30,11 @@ const AuthContextProvider = ({children}) => {
               dispatch(setUser({
                 roles,
               }));
+            })
+            .catch(() => {
+              dispatch(setUser({
+                roles: [],
+              }));
             });
       }
     });
@@ -35,8 +43,9 @@ const AuthContextProvider = ({children}) => {
   return (
     <AuthContext.Provider
       value={{
-        ...state,
-        dispatch,
+        user: state,
+        authDispatch: dispatch,
+        logout,
       }}
     >
       {children}
@@ -50,11 +59,7 @@ AuthContextProvider.propTypes = {
 
 const withAuth = (Component) =>
   (props) => (
-    <AuthContext.Consumer>
-      {(authContext) => (
-        <Component {...props} {...{authContext}}/>
-      )}
-    </AuthContext.Consumer>
+    <Component {...props} {...useContext(AuthContext)}/>
   );
 
 export {withAuth, AuthContextProvider};

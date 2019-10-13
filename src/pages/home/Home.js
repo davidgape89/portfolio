@@ -1,16 +1,26 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Article from '../../components/article/Article';
-import article from '../../assets/mocks/article';
 import {withAuth} from '../../contexts/auth/AuthContext';
+import {getPosts} from '../../firebase/database';
 
 import './Home.scss';
 
 const Home = (props) => {
-  console.log(props);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    getPosts().then((posts) => {
+      console.log(posts);
+      setPosts(posts);
+    });
+  }, []);
+
   return (
     <div className="home-page">
       <div className="home-page__content">
-        <Article {...article} />
+        {posts && posts.map((post, index) => (
+          <Article key={index} {...post} />
+        ))}
       </div>
     </div>
   );

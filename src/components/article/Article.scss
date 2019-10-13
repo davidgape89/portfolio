@@ -1,9 +1,22 @@
+@import '../../styles/variables';
+
 .article__content {
+  text-align: justify;
+
   h1 {
     font-size: 1.45rem;
   }
 
   h2 {
     font-size: 1.35rem;
+  }
+
+  img {
+    max-width: $content-width;
+  }
+
+  a {
+    color: lightblue;
+    text-decoration: underline;
   }
 }

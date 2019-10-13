@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, BrowserRouter as Router} from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './pages/home/Home';
+import Admin from './pages/admin/Admin';
 import Portfolio from './pages/portfolio/Portfolio';
 import {AuthContextProvider} from './contexts/auth/AuthContext';
 
@@ -18,6 +19,7 @@ const App = () => {
             <Header />
             <Route path="/" exact component={Home} />
             <Route path="/about-me" component={Portfolio} />
+            <Route path="/admin" component={Admin} />
           </Router>
         </div>
       </AuthContextProvider>
