@@ -1,0 +1,17 @@
+.editor {
+  background: white;
+  border: solid 1px grey;
+  border-radius: 3px;
+
+  &:focus {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
+
+  textarea {
+    border: none;
+    min-height: 400px;
+    padding: 16px;
+    resize: vertical;
+    width: 100%;
+  }
+}

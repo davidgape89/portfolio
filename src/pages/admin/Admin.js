@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {PropTypes} from 'prop-types';
-import Editor from 'for-editor';
+import Editor from '../../components/editor/editor';
 import {withAuth} from '../../contexts/auth/AuthContext';
 import {login} from '../../firebase/firebase';
 
