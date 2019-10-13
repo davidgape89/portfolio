@@ -1,6 +1,8 @@
 import React, {useState, useRef} from 'react';
+import {FaBold, FaItalic, FaLink, FaImage} from 'react-icons/fa';
 
 import './editor.scss';
+import ReactMarkdown from 'react-markdown';
 
 const modifiers = {
   'bold': {
@@ -19,6 +21,16 @@ const modifiers = {
     symetrical: false,
     text: '## ',
   },
+  'link': {
+    symettrical: false,
+    text: '[',
+    endText: '](http://)',
+  },
+  'image': {
+    symettrical: false,
+    text: '![',
+    endText: '](http://)',
+  }
 };
 
 /**
@@ -26,10 +38,13 @@ const modifiers = {
  * @param {*} props Props of the component
  */
 export default function Editor({onChange, value}) {
-  const [content, setContent] = useState(value || null);
+  const [content, setContent] = useState(value || '');
+  const [isEditing, setIsEditing] = useState(true);
   const textAreaRef = useRef(null);
 
   const textModifier = (modifierId) => {
+    // This breaks the Ctrl+z command, maybe try execCommand
+    // to append text
     const modifier = modifiers[modifierId];
     const modifierLength = modifier.text.length;
     const startPosition = textAreaRef.current.selectionStart;
@@ -38,11 +53,13 @@ export default function Editor({onChange, value}) {
     const beforeCaretText = content.substr(0, startPosition);
     const afterCaretText = content.substr(endPosition, content.length);
     const selectedText = content.substr(startPosition, selectionLength);
+    const startModifier = modifier.text;
+    const endModifier = modifier.symetrical ? modifier.text : modifier.endText || '';
 
     textAreaRef.current.value =
         `${beforeCaretText}` +
-        `${modifier.text}${selectedText}` +
-        `${modifier.symetrical ? modifier.text : ''}` +
+        `${startModifier}${selectedText}` +
+        `${endModifier}` +
         `${afterCaretText}`;
     textAreaRef.current.focus();
     textAreaRef.current.setSelectionRange(
@@ -56,33 +73,52 @@ export default function Editor({onChange, value}) {
     setContent(value);
   };
 
+  const toggleEditingMode = () => {
+    setIsEditing(!isEditing);
+  }
+
   return (
     <div className="editor">
       <div
         className="editor__header">
-        <button
-          onClick={textModifier.bind(null, 'h1')}>
-          H1
-        </button>
-        <button
-          onClick={textModifier.bind(null, 'h2')}>
-          H2
-        </button>
-        <button
-          onClick={textModifier.bind(null, 'bold')}>
-          Bold
-        </button>
-        <button
-          onClick={textModifier.bind(null, 'italic')}>
-          Italic
+        <div class="editor__header__action-buttons">
+          <button
+            onClick={textModifier.bind(null, 'h1')}>
+            <span>H1</span>
+          </button>
+          <button
+            onClick={textModifier.bind(null, 'h2')}>
+            <span>H2</span>
+          </button>
+          <button
+            onClick={textModifier.bind(null, 'bold')}>
+            <FaBold></FaBold>
+          </button>
+          <button
+            onClick={textModifier.bind(null, 'italic')}>
+            <FaItalic></FaItalic>
+          </button>
+          <button
+            onClick={textModifier.bind(null, 'link')}>
+            <FaLink></FaLink>
+          </button>
+          <button
+            onClick={textModifier.bind(null, 'image')}>
+            <FaImage></FaImage>
+          </button>
+        </div>
+        <button class="editor__header__preview-button"
+          onClick={toggleEditingMode}>
+          Preview
         </button>
       </div>
-      <textarea
+      {isEditing && <textarea
         ref={textAreaRef}
         placeholder="Write the content here"
         value={content}
         onChange={textAreaChanged}>
-      </textarea>
+      </textarea>}
+      {!isEditing && <ReactMarkdown source={content}/>}
     </div>
   );
 }
