@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import {FaBold, FaItalic, FaLink, FaImage} from 'react-icons/fa';
 
-import './editor.scss';
+import './Editor.scss';
 import ReactMarkdown from 'react-markdown';
 
 const modifiers = {
@@ -81,7 +81,7 @@ export default function Editor({onChange, value}) {
     <div className="editor">
       <div
         className="editor__header">
-        <div class="editor__header__action-buttons">
+        <div className="editor__header__action-buttons">
           <button
             onClick={textModifier.bind(null, 'h1')}>
             <span>H1</span>
@@ -107,7 +107,7 @@ export default function Editor({onChange, value}) {
             <FaImage></FaImage>
           </button>
         </div>
-        <button class="editor__header__preview-button"
+        <button className="editor__header__preview-button"
           onClick={toggleEditingMode}>
           Preview
         </button>

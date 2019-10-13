@@ -18,7 +18,7 @@ const Home = (props) => {
   return (
     <div className="home-page">
       <div className="home-page__content">
-        {posts.map((post, index) => (
+        {posts && posts.map((post, index) => (
           <Article key={index} {...post} />
         ))}
       </div>

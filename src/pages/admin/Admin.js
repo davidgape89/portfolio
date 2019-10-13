@@ -1,14 +1,21 @@
 import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
-import Editor from '../../components/editor/editor';
+import Editor from '../../components/editor/Editor';
 import {withAuth} from '../../contexts/auth/AuthContext';
 import {login} from '../../firebase/firebase';
+import {newPost} from '../../firebase/database';
 
 import './Admin.scss';
 
-const Admin = ({user, logout}) => {
+const Admin = ({user, logout, history}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  const createNewPost = () => {
+    newPost(title, content, user.uid)
+      .then(() => history.push('/'));
+  }
 
   return (
     <div className="admin-page">
@@ -42,6 +49,9 @@ const Admin = ({user, logout}) => {
                 onChange={(event) => setContent(event)}
                 aria-label="content" />
             </label>
+            <button onClick={createNewPost}>
+              Send Post
+            </button>
           </React.Fragment>
         }
       </div>
@@ -61,4 +71,4 @@ Admin.propTypes = {
   logout: PropTypes.func,
 };
 
-export default withAuth(Admin);
+export default withRouter(withAuth(Admin));
