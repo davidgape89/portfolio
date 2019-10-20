@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 
-export const CodeBlock = (props) => {
+export default (props) => {
     // Rerun code-prettify when updated 
     useEffect(() => window.PR.prettyPrint());
-    
+
     return (
         <pre className="prettyprint linenums">
             <code className="javascript">
