@@ -5,6 +5,7 @@ import {database} from './firebase';
  * @param {string} title  Title of the post
  * @param {string} content Content of the post (mark-down)
  * @param {string} authorUid Author of the post
+ * @param {string} authorName Display name of the author
  * @return {Promise} Promise of when the post have been posted.
  */
 export function newPost(
