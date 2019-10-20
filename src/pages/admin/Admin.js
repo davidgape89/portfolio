@@ -60,6 +60,7 @@ const Admin = ({user, logout, history}) => {
         }
         {(user.loading || isLoading) && 
           <img src="/img/loading.svg"
+            alt="Loading spinner"
             className="admin-page__loading-spinner"
           />
         }
