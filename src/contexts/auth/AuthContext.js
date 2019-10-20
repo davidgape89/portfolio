@@ -2,7 +2,7 @@ import React, {useReducer, createContext, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
 import {firebase} from '../../firebase/firebase';
 import reducer, {initialState} from './authReducer';
-import {setUser, logOut} from './authActions';
+import {setUser, setLoading, logOut} from './authActions';
 
 export const AuthContext = createContext();
 
@@ -14,7 +14,9 @@ const AuthContextProvider = ({children}) => {
       .catch(() => console.warn('There was a problem logging out'));
 
   useEffect(() => {
+    dispatch(setLoading(true));
     firebase.auth().onAuthStateChanged((response) => {
+      dispatch(setLoading(false));
       if (response) {
         const {uid, displayName, photoUrl, email} = response;
         dispatch(setUser({
