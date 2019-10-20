@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { CodeBlock } from '../code-block/CodeBlock';
+import CodeBlock from '../code-block/CodeBlock';
 
 import './Article.scss';
 
