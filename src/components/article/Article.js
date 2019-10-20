@@ -2,8 +2,13 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { CodeBlock } from '../code-block/CodeBlock';
 
 import './Article.scss';
+
+const renderersConfig = {
+  'code': CodeBlock,
+};
 
 const Article = (props) => {
   const {
@@ -23,6 +28,7 @@ const Article = (props) => {
       <div className="article__content">
         <ReactMarkdown
           source={content}
+          renderers={renderersConfig}
         />
       </div>
     </article>

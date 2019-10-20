@@ -9,3 +9,4 @@ $content-width: 90rem;
 // Colors
 $light-blue: #89CFF0;
 $dark-grey: #4C4C4C;
+$light-grey: lighten($dark-grey, 50%);
