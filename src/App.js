@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, BrowserRouter as Router} from 'react-router-dom';
 import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
 import Home from './pages/home/Home';
 import Admin from './pages/admin/Admin';
 import Portfolio from './pages/portfolio/Portfolio';
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/about-me" component={Portfolio} />
             <Route path="/admin" component={Admin} />
+            <Footer />
           </Router>
         </div>
       </AuthContextProvider>
