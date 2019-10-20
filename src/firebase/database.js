@@ -11,12 +11,14 @@ export function newPost(
     title,
     content,
     authorUid,
+    authorName,
 ) {
   const postData = {
     title,
     content,
     creationDate: new Date().getTime(),
     author: authorUid,
+    authorName,
   };
 
   return getPosts().then((posts) => {
