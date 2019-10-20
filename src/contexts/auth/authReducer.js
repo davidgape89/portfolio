@@ -4,6 +4,7 @@ export const initialState = {
   photoUrl: null,
   roles: [],
   uid: null,
+  loading: false,
 };
 
 export default (state, action) => {
@@ -15,6 +16,11 @@ export default (state, action) => {
       };
     case 'LOG_OUT':
       return {...initialState};
+    case 'SET_LOADING':
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }

@@ -11,10 +11,13 @@ import './Admin.scss';
 const Admin = ({user, logout, history}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const createNewPost = () => {
-    newPost(title, content, user.uid)
-      .then(() => history.push('/'));
+    setIsLoading(true);
+    newPost(title, content, user.uid, user.displayName)
+      .then(() => history.push('/'))
+      .catch(() => setIsLoading(false));
   }
 
   return (
@@ -33,10 +36,11 @@ const Admin = ({user, logout, history}) => {
           }
         </div>
         {user.uid &&
-          <React.Fragment>
+          <div className="admin-page__post-form">
             <label htmlFor="title">Title</label>
             <input
               aria-label="Title"
+              autoComplete="off"
               name="title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -52,7 +56,12 @@ const Admin = ({user, logout, history}) => {
             <button onClick={createNewPost}>
               Send Post
             </button>
-          </React.Fragment>
+          </div>
+        }
+        {(user.loading || isLoading) && 
+          <img src="/img/loading.svg"
+            className="admin-page__loading-spinner"
+          />
         }
       </div>
     </div>

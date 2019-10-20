@@ -9,14 +9,25 @@
 .admin-page__content {
   display: flex;
   flex-direction: column;
-  padding-top: $s-size;
+  padding: $m-size 0;
   width: $content-width;
+}
+
+.admin-page__post-form {
+  display: flex;
+  flex-direction: column;
+  padding: $m-size;
 }
 
 .admin-page__action-buttons {
   display:flex;
   justify-content: flex-end;
   padding: $s-size;
+}
+
+.admin-page__loading-spinner {
+  margin-top: 150px;
+  height: 150px;
 }
 
 label {
