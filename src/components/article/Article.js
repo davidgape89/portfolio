@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import './Article.scss';
 
 const Article = (props) => {
-  const {title, content} = props;
+  const {
+    title,
+    content,
+    authorName,
+    creationDate,
+  } = props;
+  const formattedDate = moment(creationDate).format("Do MMM YYYY");
 
   return (
     <article>
       <h1>{title}</h1>
+      <div className="article__sub-title">
+        <span>{authorName}, {formattedDate}</span>
+      </div>
       <div className="article__content">
         <ReactMarkdown
           source={content}

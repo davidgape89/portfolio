@@ -1,10 +1,26 @@
 @import '../../styles/variables';
 
+article {
+  border: 1px solid grey;
+  border-radius: 3px;
+  margin-top: $m-size;
+  padding: $l-size;
+}
+
+article h1 {
+  margin: 0px;
+}
+
+.article__sub-title {
+  font-size: 1.2rem;
+  margin-bottom: $m-size;
+}
+
 .article__content {
   text-align: justify;
 
   h1 {
-    font-size: 1.45rem;
+    font-size: 1.75rem;
   }
 
   h2 {
@@ -12,7 +28,7 @@
   }
 
   img {
-    max-width: $content-width;
+    max-width: 100%;
   }
 
   a {
