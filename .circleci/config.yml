@@ -6,14 +6,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: npm-{{ checksum "package-lock.json" }}-{{ arch }}
       - run: 
           name: Installing dependencies
-          command: yarn install
+          command: npm install
       - save_cache:
-          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: npm-{{ checksum "package-lock.json" }}-{{ arch }}
           paths:
-            - ~/.cache/yarn
             - node_modules
   test:
     docker:
@@ -21,23 +20,23 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: npm-{{ checksum "package-lock.json" }}-{{ arch }}
       - run: 
           name: Checking code syntax
-          command: yarn run lint
+          command: npm run lint
       - run:
           name: Running unit tests
-          command: yarn run test
+          command: npm run test
   build:
     docker: 
       - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
-          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: npm-{{ checksum "package-lock.json" }}-{{ arch }}
       - run:
           name: build
-          command: yarn run build
+          command: npm run build
       - persist_to_workspace:
           root: build
           paths:
@@ -48,12 +47,12 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: yarn-v2-{{ checksum "yarn.lock" }}-{{ arch }}
+          key: npm-{{ checksum "package-lock.json" }}-{{ arch }}
       - attach_workspace:
           at: build
       - deploy:
           name: Deploying to Firebase
-          command: yarn firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
+          command: npx firebase deploy --token "$FIREBASE_TOKEN" --non-interactive
 workflows:
   version: 2
   build:
