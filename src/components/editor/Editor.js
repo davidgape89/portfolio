@@ -6,30 +6,26 @@ import ReactMarkdown from 'react-markdown';
 
 const modifiers = {
   'bold': {
-    symetrical: true,
-    text: '*',
+    startText: '**',
+    endText: '**',
   },
   'italic': {
-    symetrical: true,
-    text: '_',
+    startText: '_',
+    endText: '_',
   },
   'h1': {
-    symetrical: false,
-    text: '# ',
+    startText: '# ',
   },
   'h2': {
-    symetrical: false,
-    text: '## ',
+    startText: '## ',
   },
   'link': {
-    symettrical: false,
-    text: '[',
-    endText: '](http://)',
+    startText: '[](http://',
+    endText: ')',
   },
   'image': {
-    symettrical: false,
-    text: '![',
-    endText: '](http://)',
+    startText: '![](http://',
+    endText: ')',
   }
 };
 
@@ -43,32 +39,26 @@ export default function Editor({onChange, value}) {
   const textAreaRef = useRef(null);
 
   const textModifier = (modifierId) => {
-    // This breaks the Ctrl+z command, maybe try execCommand
-    // to append text
     const modifier = modifiers[modifierId];
-    const modifierLength = modifier.text.length;
+    const modifierText = modifier.startText;
     const startPosition = textAreaRef.current.selectionStart;
     const endPosition = textAreaRef.current.selectionEnd;
     const selectionLength = endPosition - startPosition;
-    const beforeCaretText = content.substr(0, startPosition);
-    const afterCaretText = content.substr(endPosition, content.length);
     const selectedText = content.substr(startPosition, selectionLength);
-    const startModifier = modifier.text;
-    const endModifier = modifier.symetrical ? modifier.text : modifier.endText || '';
+    const endModifier = modifier.endText || '';
 
-    textAreaRef.current.value =
-        `${beforeCaretText}` +
-        `${startModifier}${selectedText}` +
-        `${endModifier}` +
-        `${afterCaretText}`;
     textAreaRef.current.focus();
+    document.execCommand('insertText', false, `${modifier.startText}${selectedText}${endModifier}`);
+
     textAreaRef.current.setSelectionRange(
-        startPosition + modifierLength,
-        endPosition + modifierLength);
+      startPosition + modifierText.length,
+      endPosition + modifierText.length
+    );
   };
 
   const textAreaChanged = (event) => {
     const value = event.target.value;
+
     onChange(value);
     setContent(value);
   };
@@ -81,7 +71,7 @@ export default function Editor({onChange, value}) {
     <div className="editor">
       <div
         className="editor__header">
-        <div className="editor__header__action-buttons">
+        <div className={"editor__header__action-buttons" + (!isEditing ? ' hidden' : '')}>
           <button
             onClick={textModifier.bind(null, 'h1')}>
             <span>H1</span>
