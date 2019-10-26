@@ -23,6 +23,10 @@
 }
 
 .editor__header__action-buttons {
+  &.hidden {
+    visibility: hidden;
+  }
+  
   button {
     background: transparent;
     font-weight: 600;
