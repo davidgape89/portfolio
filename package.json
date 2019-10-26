@@ -6,17 +6,17 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "firebase": "^6.3.3",
     "moment": "^2.24.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-icons": "^3.7.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-icons": "^3.8.0",
     "react-markdown": "^4.1.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "2.0.5"
+    "react-scripts": "^3.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start --no-cache",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -32,7 +32,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint": "5.6.0",
+    "eslint": "^6.0.1",
     "eslint-config-google": "^0.13.0",
     "eslint-config-standard": "^13.0.1",
     "eslint-plugin-import": "^2.18.2",
@@ -41,6 +41,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-standard": "^4.0.0",
-    "firebase-tools": "^7.2.2"
+    "firebase-tools": "^7.6.1"
   }
 }
