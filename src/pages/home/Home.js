@@ -1,26 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import Article from '../../components/article/Article';
 import {withAuth} from '../../contexts/auth/AuthContext';
-import {getPosts} from '../../firebase/firestore';
+import {getPosts, deletePost} from '../../firebase/firestore';
 
 import './Home.scss';
 
-const Home = (props) => {
+const Home = ({user}) => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     getPosts().then((value) => {
       setLoading(false);
-      return setPosts(value)
+      setPosts(value);
     });
   }, []);
+
+  const runDeletePost = (id) => {
+    console.log(id);
+    deletePost(id).then(() => 
+      setPosts(posts.filter(post => post.id !== id))
+    ).catch((error) => console.log(error));
+  }
   
   return (
     <div className="home-page">
       <div className="home-page__content">
-        {posts && posts.map((post, index) => (
-          <Article key={index} {...post} />
+        {posts && posts.map((post) => (
+          <Article key={post.id} 
+            {...post}
+            deletePost={runDeletePost.bind(null, post.id)}/>
         ))}
         {isLoading && 
           <img src="/img/loading.svg"

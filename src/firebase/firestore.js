@@ -32,8 +32,21 @@ export function newPost(
  * @return {Promise} A promise containing the posts
  */
 export function getPosts() {
-  return firestore.collection('posts').get()
-      .then((snapshot) => {
-        return snapshot.docs.map((post) => post.data());
-      });
+  return firestore.collection('posts')
+      .get()
+      .then((snapshot) => snapshot.docs.map((post) => ({
+          id: post.id,
+          ...post.data(),
+      })));
+}
+
+/**
+ * Remove post
+ * 
+ * @param {number} id Id of the post to be removed
+ */
+export function deletePost(id) {
+  return firestore.collection('posts')
+      .doc(id)
+      .delete();
 }

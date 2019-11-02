@@ -14,6 +14,8 @@ const Admin = ({user, logout, history}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
+  const isAdmin = () => user.roles.includes('admin');
+
   const createNewPost = () => {
     setIsLoading(true);
     newPost(title, content, user.uid, user.displayName)
@@ -44,7 +46,7 @@ const Admin = ({user, logout, history}) => {
             {errorMessage}
           </div>
         }
-        {user.uid && !isLoading &&
+        {isAdmin() && !isLoading &&
           <div className="admin-page__post-form">
             <label htmlFor="title">Title</label>
             <input

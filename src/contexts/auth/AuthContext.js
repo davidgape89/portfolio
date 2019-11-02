@@ -16,7 +16,6 @@ const AuthContextProvider = ({children}) => {
   useEffect(() => {
     dispatch(setLoading(true));
     firebase.auth().onAuthStateChanged((response) => {
-      dispatch(setLoading(false));
       if (response) {
         const {uid, displayName, photoUrl, email} = response;
         dispatch(setUser({
@@ -25,21 +24,26 @@ const AuthContextProvider = ({children}) => {
           email,
           photoUrl,
         }));
-        
+
         firestore.collection('users')
             .doc(uid)
             .get()
             .then((snapshot) => {
+              dispatch(setLoading(false));
+
               const {roles} = snapshot.data();
               dispatch(setUser({
                 roles,
               }));
             })
             .catch(() => {
+              dispatch(setLoading(false));
               dispatch(setUser({
                 roles: [],
               }));
             });
+      } else {
+        dispatch(setLoading(false));
       }
     });
   }, []);

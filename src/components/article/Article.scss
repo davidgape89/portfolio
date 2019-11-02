@@ -7,11 +7,22 @@ article {
   padding: $l-size;
 }
 
-article h1 {
+.article__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article__header__actions svg {
+  height: 2.4rem;
+  margin-left: 1.6rem;
+  width: 2.4rem;
+}
+
+.article__header__title h1 {
   margin: 0px;
 }
 
-.article__sub-title {
+.article__header__sub-title {
   font-size: 1.2rem;
   margin-bottom: $m-size;
 }
