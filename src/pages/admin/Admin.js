@@ -4,7 +4,7 @@ import {PropTypes} from 'prop-types';
 import Editor from '../../components/editor/Editor';
 import {withAuth} from '../../contexts/auth/AuthContext';
 import {login} from '../../firebase/firebase';
-import {newPost} from '../../firebase/database';
+import {newPost} from '../../firebase/firestore';
 
 import './Admin.scss';
 
@@ -12,12 +12,16 @@ const Admin = ({user, logout, history}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   const createNewPost = () => {
     setIsLoading(true);
     newPost(title, content, user.uid, user.displayName)
       .then(() => history.push('/'))
-      .catch(() => setIsLoading(false));
+      .catch((error) => {
+        setErrorMessage('You have no business here, go back to the home page.');
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -35,7 +39,12 @@ const Admin = ({user, logout, history}) => {
             </button>
           }
         </div>
-        {user.uid &&
+        {errorMessage && 
+          <div className="error-message">
+            {errorMessage}
+          </div>
+        }
+        {user.uid && !isLoading &&
           <div className="admin-page__post-form">
             <label htmlFor="title">Title</label>
             <input

@@ -1,6 +1,6 @@
 import React, {useReducer, createContext, useEffect, useContext} from 'react';
 import PropTypes from 'prop-types';
-import {firebase} from '../../firebase/firebase';
+import {firebase, firestore} from '../../firebase/firebase';
 import reducer, {initialState} from './authReducer';
 import {setUser, setLoading, logOut} from './authActions';
 
@@ -25,10 +25,12 @@ const AuthContextProvider = ({children}) => {
           email,
           photoUrl,
         }));
-        firebase.database().ref(`users/${uid}`)
-            .once('value')
+        
+        firestore.collection('users')
+            .doc(uid)
+            .get()
             .then((snapshot) => {
-              const {roles} = snapshot.val();
+              const {roles} = snapshot.data();
               dispatch(setUser({
                 roles,
               }));

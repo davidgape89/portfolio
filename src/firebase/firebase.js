@@ -1,5 +1,6 @@
 import * as firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/firestore';
 import 'firebase/auth';
 
 const config = {
@@ -14,6 +15,7 @@ const config = {
 firebase.initializeApp(config);
 
 const database = firebase.database();
+const firestore = firebase.firestore();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 const login = () => {
   firebase.auth().signInWithRedirect(googleAuthProvider);
@@ -21,6 +23,7 @@ const login = () => {
 
 export {
   firebase,
+  firestore,
   googleAuthProvider,
   database,
   login,

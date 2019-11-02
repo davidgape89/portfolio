@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "firebase": "^6.3.3",
+    "firebase": "^7.2.2",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
