@@ -29,27 +29,28 @@ export function newPost(
 /**
  * Gets posts
  *
+ * @param {number} limit Limit of posts per page
+ * @param {number} page Page being requested
  * @return {Promise} A promise containing the posts
  */
 export function getPosts(limit = 5, page = 1) {
-  if(page === 0) {
+  if (page === 0) {
     return firestore.collection('posts')
         .orderBy('creationDate', 'desc')
         .limit(limit)
         .get()
         .then((posts) => posts.docs.map((post) => ({
-            id: post.id,
-            ...post.data(),
-          })
-        ));
-  } else if(page > 0) {
-    let first = firestore.collection('posts')
+          id: post.id,
+          ...post.data(),
+        })));
+  } else if (page > 0) {
+    const first = firestore.collection('posts')
         .orderBy('creationDate', 'desc')
         .limit(limit * page)
         .get();
 
     return first.then((posts) => {
-      let lastVisible = posts.docs[posts.docs.length-1];
+      const lastVisible = posts.docs[posts.docs.length-1];
 
       return firestore.collection('posts')
           .orderBy('creationDate', 'desc')
@@ -68,7 +69,7 @@ export function getPosts(limit = 5, page = 1) {
 
 /**
  * Gets post by id
- * 
+ *
  * @param {number} id Id of the post
  * @return {Promise} A promise containing the post
  */
@@ -78,13 +79,13 @@ export function getPostById(id) {
       .get()
       .then((snapshot) => ({
         id,
-        ...snapshot.data()
+        ...snapshot.data(),
       }));
 }
 
 /**
  * Edit post by id
- * 
+ *
  * @param {number} id Id of the post
  * @param {string} title Title of the post to modify
  * @param {string} content Content of the post to modify
@@ -100,12 +101,11 @@ export function editPostById(id, title, content) {
       });
 }
 
-
-
 /**
  * Remove post
- * 
+ *
  * @param {number} id Id of the post to be removed
+ * @return {Promise} A void promise after deletion
  */
 export function deletePost(id) {
   return firestore.collection('posts')
