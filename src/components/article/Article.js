@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -14,6 +15,7 @@ const renderersConfig = {
 
 const Article = (props) => {
   const {
+    id,
     title,
     content,
     authorName,
@@ -35,8 +37,11 @@ const Article = (props) => {
           </div>
         </div>
         {isAdmin() && <div className="article__header__actions">
-          <FaEdit></FaEdit>
-          <FaTrash onClick={deletePost}></FaTrash>
+          <Link to={`/admin/post/${id}`}>
+            <FaEdit></FaEdit>
+          </Link>
+          <FaTrash onClick={deletePost}>
+          </FaTrash>
         </div>}
       </div>
       

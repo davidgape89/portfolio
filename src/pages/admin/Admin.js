@@ -1,24 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import Editor from '../../components/editor/Editor';
 import {withAuth} from '../../contexts/auth/AuthContext';
 import {login} from '../../firebase/firebase';
-import {newPost} from '../../firebase/firestore';
+import {newPost, getPostById, editPostById} from '../../firebase/firestore';
 
 import './Admin.scss';
 
-const Admin = ({user, logout, history}) => {
+const Admin = ({user, logout, history, match}) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
+  const postId = match.params.postid;
 
   const isAdmin = () => user.roles.includes('admin');
+
+  useEffect(() => {
+    if(postId) {
+      setIsLoading(true);
+      getPostById(postId).then((post) => {
+        setTitle(post.title);
+        setContent(post.content);
+        setIsLoading(false);
+      });
+    }
+  }, [postId]);
 
   const createNewPost = () => {
     setIsLoading(true);
     newPost(title, content, user.uid, user.displayName)
+      .then(() => history.push('/'))
+      .catch((error) => {
+        setErrorMessage('You have no business here, go back to the home page.');
+        setIsLoading(false);
+      });
+  }
+
+  const editPost = () => {
+    setIsLoading(true);
+    editPostById(postId, title, content)
       .then(() => history.push('/'))
       .catch((error) => {
         setErrorMessage('You have no business here, go back to the home page.');
@@ -64,9 +86,14 @@ const Admin = ({user, logout, history}) => {
                 onChange={(event) => setContent(event)}
                 aria-label="content" />
             </label>
-            <button onClick={createNewPost}>
-              Send Post
-            </button>
+            {postId ? 
+              <button onClick={editPost}>
+                Edit
+              </button> :
+              <button onClick={createNewPost}>
+                Submit
+              </button>
+            }
           </div>
         }
         {(user.loading || isLoading) && 

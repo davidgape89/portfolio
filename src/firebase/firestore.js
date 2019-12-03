@@ -31,14 +31,76 @@ export function newPost(
  *
  * @return {Promise} A promise containing the posts
  */
-export function getPosts() {
-  return firestore.collection('posts')
-      .get()
-      .then((snapshot) => snapshot.docs.map((post) => ({
-          id: post.id,
-          ...post.data(),
-      })));
+export function getPosts(limit = 5, page = 1) {
+  if(page === 0) {
+    return firestore.collection('posts')
+        .orderBy('creationDate', 'desc')
+        .limit(limit)
+        .get()
+        .then((posts) => posts.docs.map((post) => ({
+            id: post.id,
+            ...post.data(),
+          })
+        ));
+  } else if(page > 0) {
+    let first = firestore.collection('posts')
+        .orderBy('creationDate', 'desc')
+        .limit(limit * page)
+        .get();
+
+    return first.then((posts) => {
+      let lastVisible = posts.docs[posts.docs.length-1];
+
+      return firestore.collection('posts')
+          .orderBy('creationDate', 'desc')
+          .startAfter(lastVisible)
+          .limit(limit)
+          .get()
+          .then((snapshot) => snapshot.docs.map((post) => {
+            return ({
+              id: post.id,
+              ...post.data(),
+            });
+          }));
+    });
+  }
 }
+
+/**
+ * Gets post by id
+ * 
+ * @param {number} id Id of the post
+ * @return {Promise} A promise containing the post
+ */
+export function getPostById(id) {
+  return firestore.collection('posts')
+      .doc(id)
+      .get()
+      .then((snapshot) => ({
+        id,
+        ...snapshot.data()
+      }));
+}
+
+/**
+ * Edit post by id
+ * 
+ * @param {number} id Id of the post
+ * @param {string} title Title of the post to modify
+ * @param {string} content Content of the post to modify
+ * @return {Promise} A promise containing the post
+ */
+export function editPostById(id, title, content) {
+  return firestore.collection('posts')
+      .doc(id)
+      .update({
+        title,
+        content,
+        lastEditedDate: moment().valueOf(),
+      });
+}
+
+
 
 /**
  * Remove post

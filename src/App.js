@@ -20,7 +20,8 @@ const App = () => {
             <Header />
             <Route path="/" exact component={Home} />
             <Route path="/about-me" component={Portfolio} />
-            <Route path="/admin" component={Admin} />
+            <Route path="/admin/post" exact component={Admin} />
+            <Route path="/admin/post/:postid" component={Admin} />
             <Footer />
           </Router>
         </div>
